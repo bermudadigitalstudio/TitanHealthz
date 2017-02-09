@@ -6,7 +6,7 @@
 
 set -eo pipefail
 
-IMAGE=swift-3.0-openssl
+IMAGE=swift:3.0
 DIR="`dirname \"$0\"`"
 
 args=()
@@ -19,13 +19,5 @@ do
 done
 
 set -x
-docker build -t $IMAGE - <<EOF
-FROM swift:3.0
-
-RUN apt-get update \
-    && apt-get install -y openssl libssl-dev \
-    && rm -r /var/lib/apt/lists/*
-
-EOF
 
 docker run --rm -it -w /code ${args[@]} $IMAGE bash
